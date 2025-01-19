@@ -1,31 +1,35 @@
-export class User {
-    username;
-    nuggets;
-    collectedMons;
-    failedMons;
-    totalEarned;
-    currentPartner;
+import { Nuggetmon } from "./Nuggetmon";
 
-    constructor(username) {
-        this.username = username;
+class User {
+    constructor(name) {
+        this.name = name;
+        this.currentNuggetmon = [];
+        this.nuggetdex = {};
         this.nuggets = 0;
-        this.collectedMons = 0;
-        this.failedmons = 0;
-        this.totalEarned = 0;
-        this.currentPartner = null;
-    }
-    earnNuggets(toEarn) {
-        this.nuggets += toEarn;
-        this.totalEarned += toEarn;
-    }
-    spendNuggets(toSpend) {
-        this.nuggets -= toSpend;
-    }
-    failMon() {
-        this.failedMons++;
     }
 
-    setActiveMon(toSet) {
-        this.currentPartner = toSet;
+    addNuggets(amount) {
+        this.nuggets += amount;
+    }
+
+    subtractNuggets(amount) {
+        if (this.nuggets >= amount) {
+            this.nuggets -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    addNuggetmon(nuggetmon) {
+        this.currentNuggetmon.push(nuggetmon);
+        if (!this.nuggetdex[nuggetmon.name]) {
+            this.nuggetdex[nuggetmon.name] = true;
+        }
+    }
+
+    getNuggets() {
+        return this.nuggets;
     }
 }
+
+export default User;
