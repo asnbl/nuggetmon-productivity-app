@@ -1,0 +1,239 @@
+
+/* header stuff */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;      
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+.header {
+    background-color: #cacaca;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    align-items: flex-end;
+    display: flex;
+    font-size: 16px;
+    color: #000000;
+}
+
+.title {
+    font-size: 48px;
+    color: #000000;
+    text-align: left;
+    margin-left: 2%;
+    font-family: Arial, sans-serif;
+}
+
+.nugget {
+   padding: 20px;
+}
+
+ul {
+    margin: 0;
+    margin-left: auto;
+    padding: 0;
+    height: 50px;
+    display: flex;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #cdcdcd;
+    font-family: Arial, sans-serif;
+}
+
+li {
+    float: right;
+    width: 90px;
+    padding: 1px;
+}
+
+li a {
+    display: block;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 18px 4px;
+    text-decoration: none;
+    border-top-left-radius: 15px; 
+    border-top-right-radius: 15px; 
+}
+
+li a:hover:not(.active) {
+    background-color: #eeeeee;  
+}
+
+.active {
+    background-color: #ffffff;
+}
+
+/* profile stuff */
+.profile-container {
+    margin-left: 5%; 
+    margin-right: 2%;     
+    width: 80px;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.profile-image {
+    width: 60px;
+    height: auto;
+    border-radius: 50%;
+    margin: auto;
+    margin-left: 10px;
+}
+
+.coin-image {
+    position: relative;
+    width: 90px;
+    margin-left: 5px;
+    height: auto;
+}
+
+.nuggetcoin {
+    display: block;
+    color: #000;
+    margin-top: -20px;
+}
+
+.nugget-group {
+    position: absolute;
+    font-size: 12px;
+    font-weight: bold;
+    align-items: center;
+    margin: auto;
+}
+
+.nugget-amt {
+    position: absolute;
+    font-size: 12px;
+    font-weight: bold;
+    align-items: center;
+    margin-top: -40px;
+    margin-left: 15px;
+}
+
+/* body stuff */
+
+.main-container {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.section {
+    background-color: #d3d3d3;
+    padding: 30px;
+    border-radius: 15px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.apps {
+    overflow-y: auto;
+    max-height: 200px;
+}
+h2 {
+    margin: 0 0 20px;
+    font-size: 18px;
+}
+
+.timers, .apps {
+    margin-bottom: 20px;  
+    border-radius: 15px;      
+    background-color: #d3d3d3;
+}
+
+.timer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+.app-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.refresh-button {
+    background-color: transparent;
+    border: none;
+    width: 20px;
+    height: auto;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.refresh-image {
+    width: 20px;
+    height: auto;
+}
+
+.start-button {
+    margin: auto;
+    margin-top: 30px;
+    width: 100px;
+    background-color: #f5f5f5;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-button:hover {
+    background-color: #e0e0e0;
+}
+
+.arrow {
+    font-weight: bold;
+}
+
+/* gacha stuff */
+.gacha-container {
+    margin: auto;    
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.gacha-img {
+    width: 60%;
+    margin: auto;
+}
+.round-button {
+    width: 100px; 
+    height: 100px; 
+    margin: auto;
+    margin-top: 30px;
+    border-radius: 50%; 
+    background-color: #f04040; 
+    border: none; 
+    cursor: pointer; 
+}
+.round-button:hover {
+    background-color: #851e1e;
+}

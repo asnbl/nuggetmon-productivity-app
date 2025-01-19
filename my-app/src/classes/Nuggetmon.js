@@ -11,11 +11,15 @@ export class Nuggetmon {
         this.photoPath = photoPath;
     }
 
+    getAngerPercentage() {
+        return this.angerLevel / this.angerThreshold;
+    }
+
     setNickname(nickname) {
         this.nickname = nickname;
     }
 
     increaseAnger() {
-        ++this.angerLevel;
+        this.angerLevel++;
     }
 }

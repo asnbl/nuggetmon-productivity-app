@@ -1,19 +1,21 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
+import { Session } from './classes/Session';
+import { User } from './classes/User';
+import { Nuggetmon } from './classes/Nuggetmon';
+import Timer from "./classes/Timer";
 
 if (started) {
   app.quit();
 }
-
 
 let productiveWindows = []
 
 let mainWindow;
 let popupWindow;
 
-const {windowManager} = require('node-window-manager') // comment when run
-
+const { windowManager } = require('node-window-manager')
 
 const createPopupWindow = () => {
   popupWindow = new BrowserWindow({
@@ -42,7 +44,6 @@ const createPopupWindow = () => {
   });
 };
 
-
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -52,6 +53,7 @@ const createWindow = () => {
     },
   });
 
+<<<<<<< HEAD
   // if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
   //   mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   // } else {
@@ -59,9 +61,16 @@ const createWindow = () => {
   // }
 
   mainWindow.loadFile("src/nuggetmon.html");
+=======
+  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  } else {
+    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
+  }
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677
 
   // Open the DevTools.
-//   mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   setTimeout(createPopupWindow, 1000);
   mainWindow.on('closed', () => {
@@ -71,59 +80,46 @@ const createWindow = () => {
   });
 };
 
-
-// comment when run
-const trackWindows = () => {
-  setInterval(async () => {
-    let newWindow = windowManager.getActiveWindow();
-
-    // Check if the window is already in productiveWindows by comparing IDs
-    if (
-        newWindow &&
-        !productiveWindows.some(win => win.id === newWindow.id) &&
-        productiveWindows.length < 3
-    ) {
-      productiveWindows.push(newWindow);
-      console.log("Added to productive windows:", newWindow);
-    }
-
-    if (
-        newWindow &&
-        !productiveWindows.some(win => win.id === newWindow.id)
-    ) {
-      console.log("That's not productive!");
-    }
-  }, 1000);
-};
-
-// comment when run
 const getOpenWindows = () => {
   const windows = windowManager.getWindows();
 
   // Filter to include only visible windows
-  const visibleWindows = windows.filter(window => window.isVisible());
+  const visibleWindows = windows.filter(window => window.isVisible() && window.getTitle() !== '');
 
-  const windowTitles = visibleWindows.map((window) => {return window.getTitle()});
+  // Map to include window data and titles
+  const windowsWithTitles = visibleWindows.map(window => ({
+    id: window.id,
+    title: window.getTitle()
+  }));
 
-  return windowTitles.filter(window => window !== '');
-  // console.log('Open Windows:', visibleWindows);
+  return windowsWithTitles;
 };
 
+ipcMain.on('refresh-windows', (event) => {
+  const openWindows = getOpenWindows();
+  event.sender.send('open-windows', openWindows);
+});
 
+const user = new User('genericUser');
+const nuggetmon = new Nuggetmon('genericName', 'genericNickname', 1, 0, 10, 'genericPhoto');
+
+ipcMain.on('start-session', (event, { selectedWindows, pomodoroTimer }) => {
+
+  const session = new Session(new Timer(pomodoroTimer * 60, () => session.endSession()), user, user.getActiveNuggetmon());
+
+  session.setProductiveApps(selectedWindows);
+  session.startSession();
+  console.log('Session started with productive apps:', selectedWindows);
+});
 
 app.whenReady().then(() => {
   createWindow();
 
-  // comment when run
   const windows = getOpenWindows();
   console.log(windows);
   console.log(windows.length);
 
   trackWindows();
-
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

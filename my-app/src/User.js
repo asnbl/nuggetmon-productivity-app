@@ -1,19 +1,29 @@
 import { Nuggetmon } from "./classes/Nuggetmon.js";
 
+<<<<<<< HEAD:my-app/src/User.js
 export default class User {
+=======
+export class User {
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677:my-app/src/classes/User.js
     failedNuggetmon;
     currentNuggetmon;
+    activeNuggetmon;
     nuggets;
     nuggetdex;
 
     constructor() {
         this.failedNuggetmon = 0;
+<<<<<<< HEAD:my-app/src/User.js
         this.currentNuggetmon = [new Nuggetmon("Nugget", "images/nugget.png"), 
                                 new Nuggetmon("Mike", "images/mike.png"),
                                 new Nuggetmon("Totoro", "images/totoro.png")
         ];
         //this.currentNuggetmon = [new Nuggetmon("Nugget", "images/nugget.png"), new Nuggetmon("Mike", "images/mike.png")];
         // this.currentNuggetmon = [new Nuggetmon("Nugget", "images/nugget.png")];
+=======
+        this.currentNuggetmon = [new Nuggetmon("Nugget", "src/images/nugget.png")];
+        this.activeNuggetmon = this.currentNuggetmon[0];
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677:my-app/src/classes/User.js
         this.nuggets = 0;
         this.nuggetdex = {
             "Nugget": true,
@@ -121,8 +131,34 @@ export default class User {
     getNuggetmonByName(name) {
         return this.currentNuggetmon.find(nuggetmon => nuggetmon.name === name) || null;
     }
+<<<<<<< HEAD:my-app/src/User.js
+=======
+}
+
+getActiveNuggetmon() {
+    return this.activeNuggetmon;
+}
+
+setActiveNuggetmon(nuggetmon) {
+    if (nuggetmon instanceof Nuggetmon) {
+        this.activeNuggetmon = nuggetmon;
+    } else {
+        console.error("Invalid Nuggetmon object passed:", nuggetmon);
+    }
+}
+
+getNuggetmonByName(name) {
+    return this.currentNuggetmon.find(nuggetmon => nuggetmon.name === name) || null;
+}
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677:my-app/src/classes/User.js
 
     getNuggets() {
         return this.nuggets;
     }
+<<<<<<< HEAD:my-app/src/User.js
 }
+=======
+}
+
+// export default User;
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677:my-app/src/classes/User.js
