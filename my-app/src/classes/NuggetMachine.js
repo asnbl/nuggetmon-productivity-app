@@ -75,6 +75,7 @@ class NuggetMachine {
     roll(user) {
         const rollCost = 120;
         if (user.subtractNuggets(rollCost)) {
+            console.log("rolled.");
             const keys = Object.keys(this.possibleNuggetmon);
             const randomKey = keys[Math.floor(Math.random() * keys.length)];
             const newNuggetmon = new Nuggetmon(randomKey, this.possibleNuggetmon[randomKey]);

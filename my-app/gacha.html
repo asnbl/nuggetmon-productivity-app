@@ -13,9 +13,9 @@
       <h1 class="title">NUGGETMON</h1>
       <div class='nugget'><img src="assets/nugget_types.png" alt="Nugget!"></div>
       <ul>
-        <li><a href="#timer">Timer</a></li>
-        <li><a class="active" href="#gacha">Gacha</a></li>
-        <li><a href="#Nuggetmon">Nuggetmon</a></li>
+        <li><a href="index.html">Timer</a></li>
+        <li><a class="active" href="gacha.html">Gacha</a></li>
+        <li><a href="nuggetmon.html">Nuggetmon</a></li>
       </ul>
       <div class="profile-container">
         <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
@@ -29,5 +29,10 @@
 
   <div class="gacha-container">
     <img class="gacha-img" src="assets/gacha.png" alt="Gacha">
-    <button class="round-button"></button>
+    <button id="gacha-button" class="round-button" onclick="roll();"></button>
   </div>
+</body>
+
+<script src="my-app/src/classes/User.js"></script>
+<script src="my-app/src/classes/NuggetMachine.js"></script>
+<script src="my-app/src/main.js"></script>
