@@ -113,6 +113,10 @@ removeNuggetmon(nuggetmon) {
     }
 }
 
+getNuggetmonByName(name) {
+    return this.currentNuggetmon.find(nuggetmon => nuggetmon.name === name) || null;
+}
+
     getNuggets() {
         return this.nuggets;
     }
