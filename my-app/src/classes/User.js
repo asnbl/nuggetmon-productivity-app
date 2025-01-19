@@ -1,14 +1,12 @@
 import { Nuggetmon } from "./Nuggetmon";
 
 class User {
-    name;
     failedNuggetmon;
     currentNuggetmon;
     nuggets;
     nuggetdex;
 
-    constructor(name) {
-        this.name = name;
+    constructor() {
         this.failedNuggetmon = 0;
         this.currentNuggetmon = [new Nuggetmon("Nugget", "src/images/nugget.png")];
         this.nuggets = 0;

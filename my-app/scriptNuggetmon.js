@@ -1,3 +1,8 @@
+import User from User.js;
+
+let user = new User();
+
+
 var i = 0;
 var original = document.getElementById('duplicater');
 
