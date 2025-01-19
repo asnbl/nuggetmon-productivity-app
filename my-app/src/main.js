@@ -7,7 +7,7 @@ if (started) {
   app.quit();
 }
 
-const { windowManager } = require("node-window-manager");
+// const { windowManager } = require("node-window-manager");
 
 // const window = windowManager.getActiveWindow();
 //
@@ -19,37 +19,39 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
+    // webPreferences: {
+    //   preload: path.join(__dirname, 'preload.js'),
+    // },
   });
 
   // and load the index.html of the app.
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
-  }
+  // if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+  //   mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  // } else {
+  //   mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
+  // }
+
+  mainWindow.loadFile("nuggetmon.html");
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
-const trackWindows = () => {
-  setInterval(async () => {
-    let newWindow = windowManager.getActiveWindow();
-    console.log(newWindow);
-  }, 1000);
-}
+// const trackWindows = () => {
+//   setInterval(async () => {
+//     let newWindow = windowManager.getActiveWindow();
+//     console.log(newWindow);
+//   }, 1000);
+// }
 
-const getWindows = () => {
-  const windows = windowManager.getWindows();
-  windows.map((window) => {
-    // console.log(window.getTitle());
-    return window.getTitle();
-  });
-  return windows;
-}
+// const getWindows = () => {
+//   const windows = windowManager.getWindows();
+//   windows.map((window) => {
+//     // console.log(window.getTitle());
+//     return window.getTitle();
+//   });
+//   return windows;
+// }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -57,8 +59,8 @@ const getWindows = () => {
 app.whenReady().then(() => {
   createWindow();
 
-  const windows = getWindows();
-  console.log(windows.length);
+  // const windows = getWindows();
+  // console.log(windows.length);
   // console.log(windows);
 
   // trackWindows();

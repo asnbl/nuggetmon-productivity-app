@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,20 +14,37 @@
       <h1 class="title">NUGGETMON</h1>
       <div class='nugget'><img src="assets/nugget_types.png" alt="Nugget!"></div>
       <ul>
-        <li><a class="active" href="#timer">Timer</a></li>
+        <li><a href="#timer">Timer</a></li>
         <li><a href="#gacha">Gacha</a></li>
-        <li><a href="#Nuggetmon">Nuggetmon</a></li>
+        <li><a class="active" href="#Nuggetmon">Nuggetmon</a></li>
       </ul>
       <div class="profile-container">
         <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
         <div class="nugget-group">
           <div class="nuggetcoin"><img class="coin-image" src="assets/coin group.png" alt="coin"></div>
-          <p class="nugget-amt">32535</p>
+          <p id="nugget-amt">0</p>
         </div> <!--TODO: put actual nugget amount -->
       </div>
     </div>
   </header>
+
+  <main>
+    <button id="button" onclick="duplicate()">POWER THE LEBRONS!!</button>
+    
+    <div class="mon-display">
+      <div class="nuggetmon-square" id="duplicater">
+        <div>
+          <p class="nugget-mon-label">lebron</p>
+        </div>
+
+        <div class="anger-bar"></div>
+        <div><img src="assets/lebron.png" alt="lebron" class="mon-img"></div>
+      </div>
+    </div>
+  </main>
+
 </body>
 
-</html>
+<script src="script.js"></script>
 
+</html>
