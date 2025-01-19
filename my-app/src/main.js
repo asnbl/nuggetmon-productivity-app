@@ -6,6 +6,7 @@ if (started) {
   app.quit();
 }
 
+
 let productiveWindows = []
 
 let mainWindow;
@@ -54,11 +55,11 @@ const createWindow = () => {
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
   }
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+//   mainWindow.webContents.openDevTools();
 
   setTimeout(createPopupWindow, 1000);
   mainWindow.on('closed', () => {
@@ -126,11 +127,11 @@ app.whenReady().then(() => {
   });
 });
 
-// mainWindow.on('closed', () => {
-//   if (popupWindow && !popupWindow.isDestroyed()) {
-//     popupWindow.close();
-//   }
-// });
+mainWindow.on('closed', () => {
+  if (popupWindow && !popupWindow.isDestroyed()) {
+    popupWindow.close();
+  }
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
