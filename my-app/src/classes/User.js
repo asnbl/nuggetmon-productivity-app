@@ -2,13 +2,15 @@ import { Nuggetmon } from "./Nuggetmon";
 
 class User {
     name;
+    failedNuggetmon;
     currentNuggetmon;
     nuggets;
     nuggetdex;
 
     constructor(name) {
         this.name = name;
-        this.currentNuggetmon = ["Nugget"];
+        this.failedNuggetmon = 0;
+        this.currentNuggetmon = [new Nuggetmon("Nugget", "src/images/nugget.png")];
         this.nuggets = 0;
         this.nuggetdex = {
             "Nugget": true,
@@ -96,13 +98,22 @@ class User {
             this.nuggetdex[nuggetmon.name] = true;
         }
     }
-    removeNuggetmon(name) {
-        const index = this.currentNuggetmon.indexOf(name);
-        if (index > -1) {
-            this.currentNuggetmon.splice(index, 1);
-        }
+
+removeNuggetmon(nuggetmon) {
+    if (!nuggetmon || !nuggetmon.name) {
+        console.error("Invalid Nuggetmon object passed:", nuggetmon);
+        return;
     }
 
+    const index = this.currentNuggetmon.findIndex(n => n.name === nuggetmon.name);
+    if (index > -1) {
+        this.failedNuggetmon++;
+        this.currentNuggetmon.splice(index, 1);
+        console.log(`${nuggetmon.name} has been removed from your Nuggetmon collection.`);
+    } else {
+        console.warn(`Nuggetmon with name "${nuggetmon.name}" not found in the collection.`);
+    }
+}
 
     getNuggets() {
         return this.nuggets;
