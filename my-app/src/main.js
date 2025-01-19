@@ -30,6 +30,7 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 };
 
+
 const trackWindows = () => {
   setInterval(async () => {
     let newWindow = windowManager.getActiveWindow();
@@ -63,6 +64,8 @@ app.whenReady().then(() => {
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
+
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
