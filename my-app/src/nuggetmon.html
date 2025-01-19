@@ -12,16 +12,16 @@
   <header>
     <div class="header">
       <h1 class="title">NUGGETMON</h1>
-      <div class='nugget'><img src="assets/nugget_types.png" alt="Nugget!"></div>
+      <div class='nugget'><img src="../assets/nugget_types.png" alt="Nugget!"></div>
       <ul>
         <li><a href="#timer">Timer</a></li>
         <li><a href="#gacha">Gacha</a></li>
         <li><a class="active" href="#Nuggetmon">Nuggetmon</a></li>
       </ul>
       <div class="profile-container">
-        <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
+        <div class="profile-icon"><img class="profile-image" src="../assets/profile.webp" alt="pfp"></div>
         <div class="nugget-group">
-          <div class="nuggetcoin"><img class="coin-image" src="assets/coin group.png" alt="coin"></div>
+          <div class="nuggetcoin"><img class="coin-image" src="../assets/coin group.png" alt="coin"></div>
           <p id="nugget-amt">0</p>
         </div> <!--TODO: put actual nugget amount -->
       </div>
@@ -29,22 +29,22 @@
   </header>
 
   <main>
-    <button id="button" onclick="duplicate()">POWER THE LEBRONS!!</button>
+    <!-- <button id="button" onclick="duplicate()"> POWER THE LEBRONS!!</button> -->
     
     <div class="mon-display">
       <div class="nuggetmon-square" id="duplicater">
         <div>
-          <p class="nugget-mon-label">lebron</p>
+          <p id="nugget-name" class="nugget-mon-label">Nugget</p>
         </div>
 
         <div class="anger-bar"></div>
-        <div><img src="assets/lebron.png" alt="lebron" class="mon-img"></div>
+        <div><img id="mon-img" src="images/nugget.png" alt="" class="mon-img" width="128" height="129"></div>
       </div>
     </div>
   </main>
-
+  <!-- ../assets/lebron.png -->
 </body>
 
-<script src="scriptNuggetmon.js"></script>
+<script type="module" src="scriptNuggetmon.js"></script>
 
 </html>

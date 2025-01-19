@@ -22,7 +22,7 @@ const createPopupWindow = () => {
     width: 300,
     height: 200,
     alwaysOnTop: true,
-    frame: false,
+    frame: true,
     transparent: true,
     show: false,
     skipTaskbar: true,
@@ -53,11 +53,21 @@ const createWindow = () => {
     },
   });
 
+<<<<<<< HEAD
+  // if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+  //   mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  // } else {
+  //   mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
+  // }
+
+  mainWindow.loadFile("src/nuggetmon.html");
+=======
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
   }
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
