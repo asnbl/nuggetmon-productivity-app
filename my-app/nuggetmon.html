@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nuggetmon</title>
-  <link rel="stylesheet" href="stylesNuggetmon.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+
 <header>
   <div class="header">
     <h1 class="title">NUGGETMON</h1>
@@ -17,28 +18,37 @@
       <li><a href="gacha.html">Gacha</a></li>
       <li><a class="active" href="nuggetmon.html">Nuggetmon</a></li>
     </ul>
-    <div class="profile-container">
-      <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
-      <div class="nugget-group">
-        <div class="nuggetcoin"><img class="coin-image" src="assets/coin group.png" alt="coin"></div>
-        <p id="nugget-amt" class="nugget-amt">0</p>
-      </div> <!--TODO: put actual nugget amount -->
+      <div class="profile-container">
+        <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
+        <div class="nugget-group">
+          <div class="nuggetcoin"><img class="coin-image" src="assets/coin group.png" alt="coin"></div>
+          <p class="nugget-amt">0</p>
+        </div> <!--TODO: put actual nugget amount -->
+      </div>
+
     </div>
   </div>
 </header>
 
-<main>
-  <button id="button" onclick="duplicate()">POWER THE LEBRONS!!</button>
 
-  <div class="mon-display">
-    <div class="nuggetmon-square" id="duplicater">
-      <div>
-        <p class="nugget-mon-label">lebron</p>
+  <main>
+    <!-- <button id="button" onclick="duplicate()"> POWER THE LEBRONS!!</button> -->
+    
+    <div class="mon-display">
+      <div class="nuggetmon-square" id="duplicater">
+        <div>
+          <p id="nugget-name" class="nugget-mon-label">Nugget</p>
+        </div>
+
+        <div class="anger-bar"></div>
+        <div><img id="mon-img" src="src/images/nugget.png" alt="" class="mon-img" width="128" height="129"></div>
+
       </div>
 
       <div class="anger-bar"></div>
       <div><img src="assets/lebron.png" alt="lebron" class="mon-img"></div>
     </div>
+
   </div>
 </main>
 
@@ -62,6 +72,9 @@
     }
   });
 </script>
-<script src="scriptNuggetmon.js"></script>
+
 </body>
+
+<script type="module" src="src/scriptNuggetmon.js"></script>
+
 </html>

@@ -15,6 +15,7 @@ let popupWindow;
 
 const { windowManager } = require('node-window-manager')
 
+
 const createPopupWindow = () => {
   popupWindow = new BrowserWindow({
     width: 300,
@@ -37,6 +38,7 @@ const createPopupWindow = () => {
   });
 };
 
+
 const createWindow = () => {
   mainWindow = new BrowserWindow({ // Assign the created BrowserWindow instance to mainWindow
     width: 1200,
@@ -46,6 +48,7 @@ const createWindow = () => {
     },
   });
 
+  mainWindow.loadFile("src/nuggetmon.html");
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
