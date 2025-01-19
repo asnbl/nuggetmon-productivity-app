@@ -10,12 +10,13 @@ if (started) {
   app.quit();
 }
 
+
 let productiveWindows = []
 
 let mainWindow;
 let popupWindow;
 
-const { windowManager } = require('node-window-manager')
+const {windowManager} = require('node-window-manager') // comment when run
 
 const createPopupWindow = () => {
   popupWindow = new BrowserWindow({
@@ -46,21 +47,23 @@ const createPopupWindow = () => {
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
 
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
-  }
+  // if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+  //   mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  // } else {
+  //   mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
+  // }
+
+  mainWindow.loadFile("nuggetmon.html");
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+//   mainWindow.webContents.openDevTools();
 
   setTimeout(createPopupWindow, 1000);
   mainWindow.on('closed', () => {
@@ -70,6 +73,32 @@ const createWindow = () => {
   });
 };
 
+
+// comment when run
+const trackWindows = () => {
+  setInterval(async () => {
+    let newWindow = windowManager.getActiveWindow();
+
+    // Check if the window is already in productiveWindows by comparing IDs
+    if (
+        newWindow &&
+        !productiveWindows.some(win => win.id === newWindow.id) &&
+        productiveWindows.length < 3
+    ) {
+      productiveWindows.push(newWindow);
+      console.log("Added to productive windows:", newWindow);
+    }
+
+    if (
+        newWindow &&
+        !productiveWindows.some(win => win.id === newWindow.id)
+    ) {
+      console.log("That's not productive!");
+    }
+  }, 1000);
+};
+
+// comment when run
 const getOpenWindows = () => {
   const windows = windowManager.getWindows();
 
@@ -106,6 +135,7 @@ ipcMain.on('start-session', (event, { selectedWindows, pomodoroTimer }) => {
 app.whenReady().then(() => {
   createWindow();
 
+  // comment when run
   const windows = getOpenWindows();
   console.log(windows);
   console.log(windows.length);
