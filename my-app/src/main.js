@@ -6,6 +6,8 @@ if (started) {
   app.quit();
 }
 
+let productiveWindows = []
+
 let mainWindow;
 let popupWindow;
 
@@ -70,9 +72,25 @@ const createWindow = () => {
 const trackWindows = () => {
   setInterval(async () => {
     let newWindow = windowManager.getActiveWindow();
-    console.log(newWindow);
+
+    // Check if the window is already in productiveWindows by comparing IDs
+    if (
+        newWindow &&
+        !productiveWindows.some(win => win.id === newWindow.id) &&
+        productiveWindows.length < 3
+    ) {
+      productiveWindows.push(newWindow);
+      console.log("Added to productive windows:", newWindow);
+    }
+
+    if (
+        newWindow &&
+        !productiveWindows.some(win => win.id === newWindow.id)
+    ) {
+      console.log("That's not productive!");
+    }
   }, 1000);
-}
+};
 
 const getOpenWindows = () => {
   const windows = windowManager.getWindows();
@@ -80,12 +98,9 @@ const getOpenWindows = () => {
   // Filter to include only visible windows
   const visibleWindows = windows.filter(window => window.isVisible());
 
-  // // Optionally filter further based on other properties
-  // const userFacingWindows = visibleWindows.filter(window => {
-  //   // You can add more conditions here to exclude windows that shouldn't be considered
-  //   return window.title && window.title.trim() !== ''; // Ensure the window has a title
-  // });
-  return visibleWindows;
+  const windowTitles = visibleWindows.map((window) => {return window.getTitle()});
+
+  return windowTitles.filter(window => window !== '');
   // console.log('Open Windows:', visibleWindows);
 };
 
@@ -98,7 +113,7 @@ app.whenReady().then(() => {
   console.log(windows);
   console.log(windows.length);
 
-  // trackWindows();
+  trackWindows();
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
