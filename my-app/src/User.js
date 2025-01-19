@@ -4,6 +4,7 @@ export class User {
     collectedMons;
     failedMons;
     totalEarned;
+    currentPartner;
 
     constructor(username) {
         this.username = username;
@@ -11,6 +12,7 @@ export class User {
         this.collectedMons = 0;
         this.failedmons = 0;
         this.totalEarned = 0;
+        this.currentPartner = null;
     }
 
     earnNuggets(toEarn) {
@@ -24,5 +26,9 @@ export class User {
 
     failMon() {
         this.failedMons++;
+    }
+
+    setActiveMon(toSet) {
+        this.currentPartner = toSet;
     }
 }
