@@ -1,2 +1,7 @@
-// See the Electron documentation for details on how to use preload scripts:
-// https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('electron', {
+    refreshWindows: () => ipcRenderer.send('refresh-windows'),
+    onOpenWindows: (callback) => ipcRenderer.on('open-windows', (event, windows) => callback(windows)),
+    startSession: (selectedWindows, pomodoroTimer) => ipcRenderer.send('start-session', { selectedWindows, pomodoroTimer }),
+});

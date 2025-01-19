@@ -1,6 +1,10 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
+import { Session } from './classes/Session';
+import { User } from './classes/User';
+import { Nuggetmon } from './classes/Nuggetmon';
+import Timer from "./classes/Timer";
 
 if (started) {
   app.quit();
@@ -11,8 +15,7 @@ let productiveWindows = []
 let mainWindow;
 let popupWindow;
 
-const {windowManager} = require('node-window-manager')
-
+const { windowManager } = require('node-window-manager')
 
 const createPopupWindow = () => {
   popupWindow = new BrowserWindow({
@@ -41,7 +44,6 @@ const createPopupWindow = () => {
   });
 };
 
-
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -68,43 +70,38 @@ const createWindow = () => {
   });
 };
 
-
-const trackWindows = () => {
-  setInterval(async () => {
-    let newWindow = windowManager.getActiveWindow();
-
-    // Check if the window is already in productiveWindows by comparing IDs
-    if (
-        newWindow &&
-        !productiveWindows.some(win => win.id === newWindow.id) &&
-        productiveWindows.length < 3
-    ) {
-      productiveWindows.push(newWindow);
-      console.log("Added to productive windows:", newWindow);
-    }
-
-    if (
-        newWindow &&
-        !productiveWindows.some(win => win.id === newWindow.id)
-    ) {
-      console.log("That's not productive!");
-    }
-  }, 1000);
-};
-
 const getOpenWindows = () => {
   const windows = windowManager.getWindows();
 
   // Filter to include only visible windows
-  const visibleWindows = windows.filter(window => window.isVisible());
+  const visibleWindows = windows.filter(window => window.isVisible() && window.getTitle() !== '');
 
-  const windowTitles = visibleWindows.map((window) => {return window.getTitle()});
+  // Map to include window data and titles
+  const windowsWithTitles = visibleWindows.map(window => ({
+    id: window.id,
+    title: window.getTitle()
+  }));
 
-  return windowTitles.filter(window => window !== '');
-  // console.log('Open Windows:', visibleWindows);
+  return windowsWithTitles;
 };
 
+ipcMain.on('refresh-windows', (event) => {
+  const openWindows = getOpenWindows();
+  event.sender.send('open-windows', openWindows);
+});
 
+ipcMain.on('start-session', (event, { selectedWindows, pomodoroTimer }) => {
+  const openWindows = getOpenWindows();
+  // const selectedWindowData = openWindows.filter(window => selectedWindows.includes(window.id));
+
+  const user = new User('genericUser');
+  const nuggetmon = new Nuggetmon('genericName', 'genericNickname', 1, 0, 10, 'genericPhoto');
+  const session = new Session(new Timer(pomodoroTimer * 60), user, nuggetmon);
+
+  session.setProductiveApps(selectedWindows);
+  session.startSession();
+  console.log('Session started with productive apps:', selectedWindows);
+});
 
 app.whenReady().then(() => {
   createWindow();
@@ -113,11 +110,10 @@ app.whenReady().then(() => {
   console.log(windows);
   console.log(windows.length);
 
-  trackWindows();
+  // trackWindows();
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -125,12 +121,6 @@ app.whenReady().then(() => {
     }
   });
 });
-
-// mainWindow.on('closed', () => {
-//   if (popupWindow && !popupWindow.isDestroyed()) {
-//     popupWindow.close();
-//   }
-// });
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
