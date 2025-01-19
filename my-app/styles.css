@@ -1,0 +1,112 @@
+
+/* header stuff */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+.header {
+    background-color: #cacaca;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    align-items: flex-end;
+    display: flex;
+    font-size: 16px;
+    color: #000000;
+}
+
+.title {
+    font-size: 48px;
+    color: #000000;
+    text-align: left;
+    margin-left: 2%;
+    font-family: Arial, sans-serif;
+}
+
+.nugget {
+   padding: 20px;
+}
+
+ul {
+    margin: 0;
+    margin-left: auto;
+    padding: 0;
+    height: 50px;
+    display: flex;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #cdcdcd;
+    font-family: Arial, sans-serif;
+}
+
+li {
+    float: right;
+    width: 90px;
+    padding: 1px;
+}
+
+li a {
+    display: block;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 18px 4px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #eeeeee;  
+}
+
+.active {
+    background-color: #ffffff;
+}
+
+/* profile stuff */
+.profile-container {
+    margin-left: 5%; 
+    margin-right: 2%;     
+    width: 80px;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.profile-image {
+    width: 60px;
+    height: auto;
+    border-radius: 50%;
+    margin: auto;
+    margin-left: 10px;
+}
+
+.coin-image {
+    position: relative;
+    width: 90px;
+    margin-left: 5px;
+    height: auto;
+}
+
+.nuggetcoin {
+    display: block;
+    color: #000;
+    margin-top: -20px;
+}
+
+.nugget-group {
+    position: absolute;
+    font-size: 12px;
+    font-weight: bold;
+    align-items: center;
+    margin: auto;
+}
+
+.nugget-amt {
+    position: absolute;
+    font-size: 12px;
+    font-weight: bold;
+    align-items: center;
+    margin-top: -40px;
+    margin-left: 15px;
+}
+
+/* body stuff */
