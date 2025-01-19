@@ -9,6 +9,8 @@ if (started) {
 let mainWindow;
 let popupWindow;
 
+const {windowManager} = require('node-window-manager')
+
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -24,45 +26,45 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
 
-  // mainWindow.webContents.openDevTools();
-
-  setTimeout(createPopupWindow, 1000);
-  mainWindow.on('closed', () => {
-    if (popupWindow && !popupWindow.isDestroyed()) {
-    popupWindow.close();
-    }
-  });
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools();
 };
 
-const createPopupWindow = () => {
-  popupWindow = new BrowserWindow({
-    width: 300,
-    height: 200,
-    alwaysOnTop: true,
-    frame: false,
-    transparent: true,
-    show: false,
-    skipTaskbar: true,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-    }
-  });
 
-  popupWindow.loadFile('src/popup.html');
+const trackWindows = () => {
+  setInterval(async () => {
+    let newWindow = windowManager.getActiveWindow();
+    console.log(newWindow);
+  }, 1000);
+}
 
-  popupWindow.once('ready-to-show', () => {
-    popupWindow.show();
-    popupWindow.setAlwaysOnTop(true, 'screen-saver');
-  });
+const getOpenWindows = () => {
+  const windows = windowManager.getWindows();
 
-  popupWindow.on('blur', () => {
-    popupWindow.focus();
-  });
+  // Filter to include only visible windows
+  const visibleWindows = windows.filter(window => window.isVisible());
+
+  // // Optionally filter further based on other properties
+  // const userFacingWindows = visibleWindows.filter(window => {
+  //   // You can add more conditions here to exclude windows that shouldn't be considered
+  //   return window.title && window.title.trim() !== ''; // Ensure the window has a title
+  // });
+  return visibleWindows;
+  // console.log('Open Windows:', visibleWindows);
 };
 
 app.whenReady().then(() => {
   createWindow();
+
+  const windows = getOpenWindows();
+  console.log(windows);
+  console.log(windows.length);
+
+  // trackWindows();
+
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
