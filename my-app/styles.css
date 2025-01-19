@@ -121,7 +121,6 @@ li a:hover:not(.active) {
     margin-left: 15px;
 }
 
-<<<<<<< HEAD
 .mon-display {
     display: flex;
     justify-content: center;
@@ -177,101 +176,3 @@ li a:hover:not(.active) {
 }
 
 /* body stuff */
-=======
-/* body stuff */
-
-.main-container {
-    margin-top: 30px;
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-.section {
-    background-color: #d3d3d3;
-    padding: 30px;
-    border-radius: 15px;
-    width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: left;
-}
-
-.apps {
-    overflow-y: auto;
-    max-height: 200px;
-}
-h2 {
-    margin: 0 0 20px;
-    font-size: 18px;
-}
-
-.timers, .apps {
-    margin-bottom: 20px;  
-    border-radius: 15px;      
-    background-color: #d3d3d3;
-}
-
-.timer-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px;
-    margin-top: 30px;
-    font-size: 16px;
-}
-
-.app-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px;
-    margin-top: 20px;
-    font-size: 16px;
-}
-
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-}
-
-.refresh-button {
-    background-color: transparent;
-    border: none;
-    width: 20px;
-    height: auto;
-    margin-bottom: 15px;
-    cursor: pointer;
-}
-
-.refresh-image {
-    width: 20px;
-    height: auto;
-}
-
-.start-button {
-    margin: auto;
-    margin-top: 30px;
-    width: 100px;
-    background-color: #f5f5f5;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.start-button:hover {
-    background-color: #e0e0e0;
-}
-
-.arrow {
-    font-weight: bold;
-}
->>>>>>> 8e97bdce8facc83275caff5b472a608381862b43
