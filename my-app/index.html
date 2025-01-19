@@ -99,8 +99,17 @@
     const nuggetAmtElement = document.getElementById('nugget-amt');
     if (nuggetAmtElement) {
       nuggetAmtElement.textContent = nuggetCount;
+      localStorage.setItem('nuggetCount', nuggetCount); // Store the nugget count in localStorage
     } else {
       console.error("Element with id 'nugget-amt' not found");
+    }
+  });
+
+  // Retrieve the nugget count from localStorage when the page loads
+  window.addEventListener('DOMContentLoaded', () => {
+    const storedNuggetCount = localStorage.getItem('nuggetCount');
+    if (storedNuggetCount !== null) {
+      document.getElementById('nugget-amt').textContent = storedNuggetCount;
     }
   });
 </script>

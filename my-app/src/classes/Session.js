@@ -2,7 +2,7 @@ const { windowManager } = require('node-window-manager');
 import Timer from './Timer';
 const { ipcMain } = require('electron');
 
-const timeBeforeAnger = 5000 // 5 seconds for testing
+const timeBeforeAnger = 1000 // 5 seconds for testing
 const angerIncreaseInterval = 5000 // 5 seconds for testing
 const reapInterval = 1000 // one minute
 
@@ -107,6 +107,10 @@ export class Session {
                     } else {
                         this.activeMon.increaseAnger();
                         console.log(`Anger level increased to: ${this.activeMon.angerLevel}`);
+
+                        // Emit IPC message to show popup
+                        ipcMain.emit('show-popup');
+
                         if (this.activeMon.getAngerPercentage() >= 1) {
                             this.user.removeNuggetmon(this.activeMon);
                             console.log("Partner left...");

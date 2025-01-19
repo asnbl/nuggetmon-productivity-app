@@ -32,11 +32,6 @@ const createPopupWindow = () => {
 
   popupWindow.loadFile('src/popup.html');
 
-  popupWindow.once('ready-to-show', () => {
-    popupWindow.show();
-    popupWindow.setAlwaysOnTop(true, 'screen-saver');
-  });
-
   popupWindow.on('blur', () => {
     popupWindow.focus();
   });
@@ -105,11 +100,15 @@ ipcMain.on('update-nugget-count', (nuggetCount) => {
   }
 });
 
-// ipcMain.on('update-nugget-count', (event, nuggetCount) => {
-//   if (mainWindow) {
-//     mainWindow.webContents.send('update-nugget-count', nuggetCount);
-//   }
-// });
+// Handle the show-popup event
+ipcMain.on('show-popup', () => {
+  if (popupWindow) {
+    popupWindow.show();
+    setTimeout(() => {
+      popupWindow.hide();
+    }, 500); // Show the popup for half a second
+  }
+});
 
 app.whenReady().then(() => {
   createWindow();

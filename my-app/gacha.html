@@ -8,31 +8,52 @@
 </head>
 
 <body>
-  <header>
-    <div class="header">
-      <h1 class="title">NUGGETMON</h1>
-      <div class='nugget'><img src="assets/nugget_types.png" alt="Nugget!"></div>
-      <ul>
-        <li><a href="index.html">Timer</a></li>
-        <li><a class="active" href="gacha.html">Gacha</a></li>
-        <li><a href="nuggetmon.html">Nuggetmon</a></li>
-      </ul>
-      <div class="profile-container">
-        <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
-        <div class="nugget-group">
-          <div class="nuggetcoin"><img class="coin-image" src="assets/coin group.png" alt="coin"></div>
-          <p class="nugget-amt">32535</p>
-        </div> <!--TODO: put actual nugget amount -->
-      </div>
+<header>
+  <div class="header">
+    <h1 class="title">NUGGETMON</h1>
+    <div class='nugget'><img src="assets/nugget_types.png" alt="Nugget!"></div>
+    <ul>
+      <li><a href="index.html">Timer</a></li>
+      <li><a class="active" href="gacha.html">Gacha</a></li>
+      <li><a href="nuggetmon.html">Nuggetmon</a></li>
+    </ul>
+    <div class="profile-container">
+      <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
+      <div class="nugget-group">
+        <div class="nuggetcoin"><img class="coin-image" src="assets/coin group.png" alt="coin"></div>
+        <p id="nugget-amt" class="nugget-amt">0</p>
+      </div> <!--TODO: put actual nugget amount -->
     </div>
-  </header>
-
-  <div class="gacha-container">
-    <img class="gacha-img" src="assets/gacha.png" alt="Gacha">
-    <button id="gacha-button" class="round-button" onclick="roll();"></button>
   </div>
-</body>
+</header>
 
+<div class="gacha-container">
+  <img class="gacha-img" src="assets/gacha.png" alt="Gacha">
+  <button id="gacha-button" class="round-button" onclick="roll();"></button>
+</div>
+
+<script>
+  window.electron.onUpdateNuggetCount((nuggetCount) => {
+    console.log("Received nugget count:", nuggetCount);
+    const nuggetAmtElement = document.getElementById('nugget-amt');
+    if (nuggetAmtElement) {
+      nuggetAmtElement.textContent = nuggetCount;
+      localStorage.setItem('nuggetCount', nuggetCount); // Store the nugget count in localStorage
+    } else {
+      console.error("Element with id 'nugget-amt' not found");
+    }
+  });
+
+  // Retrieve the nugget count from localStorage when the page loads
+  window.addEventListener('DOMContentLoaded', () => {
+    const storedNuggetCount = localStorage.getItem('nuggetCount');
+    if (storedNuggetCount !== null) {
+      document.getElementById('nugget-amt').textContent = storedNuggetCount;
+    }
+  });
+</script>
 <script src="my-app/src/classes/User.js"></script>
 <script src="my-app/src/classes/NuggetMachine.js"></script>
 <script src="my-app/src/main.js"></script>
+</body>
+</html>
