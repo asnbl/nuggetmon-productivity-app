@@ -17,32 +17,32 @@ let popupWindow;
 
 const { windowManager } = require('node-window-manager')
 
-// const createPopupWindow = () => {
-//   popupWindow = new BrowserWindow({
-//     width: 300,
-//     height: 200,
-//     alwaysOnTop: true,
-//     frame: false,
-//     transparent: true,
-//     show: false,
-//     skipTaskbar: true,
-//     webPreferences: {
-//       nodeIntegration: false,
-//       contextIsolation: true,
-//     }
-//   });
+const createPopupWindow = () => {
+  popupWindow = new BrowserWindow({
+    width: 300,
+    height: 200,
+    alwaysOnTop: true,
+    frame: false,
+    transparent: true,
+    show: false,
+    skipTaskbar: true,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+    }
+  });
 
-//   popupWindow.loadFile('src/popup.html');
+  popupWindow.loadFile('src/popup.html');
 
-//   popupWindow.once('ready-to-show', () => {
-//     popupWindow.show();
-//     popupWindow.setAlwaysOnTop(true, 'screen-saver');
-//   });
+  popupWindow.once('ready-to-show', () => {
+    popupWindow.show();
+    popupWindow.setAlwaysOnTop(true, 'screen-saver');
+  });
 
-//   popupWindow.on('blur', () => {
-//     popupWindow.focus();
-//   });
-// };
+  popupWindow.on('blur', () => {
+    popupWindow.focus();
+  });
+};
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -52,11 +52,12 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+  }
 
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
+    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/intel.html`));
   }
 
   // Open the DevTools.
@@ -68,7 +69,6 @@ const createWindow = () => {
       popupWindow.close();
     }
   });
-};
 
 const getOpenWindows = () => {
   const windows = windowManager.getWindows();
@@ -90,10 +90,12 @@ ipcMain.on('refresh-windows', (event) => {
   event.sender.send('open-windows', openWindows);
 });
 
+const user = new User('genericUser');
+const nuggetmon = new Nuggetmon('genericName', 'genericNickname', 1, 0, 10, 'genericPhoto');
+
 ipcMain.on('start-session', (event, { selectedWindows, pomodoroTimer }) => {
-  const user = new User('genericUser');
-  const nuggetmon = new Nuggetmon('genericName', 'genericNickname', 1, 0, 10, 'genericPhoto');
-  const session = new Session(new Timer(pomodoroTimer * 60), user, nuggetmon);
+
+  const session = new Session(new Timer(pomodoroTimer * 60, () => session.endSession()), user, user.getActiveNuggetmon());
 
   session.setProductiveApps(selectedWindows);
   session.startSession();

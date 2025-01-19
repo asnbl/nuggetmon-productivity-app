@@ -2,13 +2,17 @@ export class Nuggetmon {
     name;
     angerLevel;
     angerThreshold;
-    photo;
+    photoPath;
 
     constructor(name, photoPath) {
         this.name = name;
         this.angerLevel = 0;
         this.angerThreshold = 20;
-        this.photo = photoPath;
+        this.photoPath = photoPath;
+    }
+
+    getAngerPercentage() {
+        return this.angerLevel / this.angerThreshold;
     }
 
     setNickname(nickname) {
@@ -16,6 +20,6 @@ export class Nuggetmon {
     }
 
     increaseAnger() {
-        ++this.angerLevel;
+        this.angerLevel++;
     }
 }

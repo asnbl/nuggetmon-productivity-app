@@ -1,6 +1,10 @@
-import { Nuggetmon } from "./Nuggetmon";
+import { Nuggetmon } from "./classes/Nuggetmon.js";
 
+<<<<<<< HEAD:my-app/src/User.js
+export default class User {
+=======
 export class User {
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677:my-app/src/classes/User.js
     failedNuggetmon;
     currentNuggetmon;
     activeNuggetmon;
@@ -9,8 +13,17 @@ export class User {
 
     constructor() {
         this.failedNuggetmon = 0;
+<<<<<<< HEAD:my-app/src/User.js
+        this.currentNuggetmon = [new Nuggetmon("Nugget", "images/nugget.png"), 
+                                new Nuggetmon("Mike", "images/mike.png"),
+                                new Nuggetmon("Totoro", "images/totoro.png")
+        ];
+        //this.currentNuggetmon = [new Nuggetmon("Nugget", "images/nugget.png"), new Nuggetmon("Mike", "images/mike.png")];
+        // this.currentNuggetmon = [new Nuggetmon("Nugget", "images/nugget.png")];
+=======
         this.currentNuggetmon = [new Nuggetmon("Nugget", "src/images/nugget.png")];
         this.activeNuggetmon = this.currentNuggetmon[0];
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677:my-app/src/classes/User.js
         this.nuggets = 0;
         this.nuggetdex = {
             "Nugget": true,
@@ -77,7 +90,7 @@ export class User {
             "Lightning McQueen": false,
             "Goku": false,
             "LeBron": false
-        };        
+        };
     }
 
     addNuggets(amount) {
@@ -99,20 +112,27 @@ export class User {
         }
     }
 
-removeNuggetmon(nuggetmon) {
-    if (!nuggetmon || !nuggetmon.name) {
-        console.error("Invalid Nuggetmon object passed:", nuggetmon);
-        return;
+    removeNuggetmon(nuggetmon) {
+        if (!nuggetmon || !nuggetmon.name) {
+            console.error("Invalid Nuggetmon object passed:", nuggetmon);
+            return;
+        }
+
+        const index = this.currentNuggetmon.findIndex(n => n.name === nuggetmon.name);
+        if (index > -1) {
+            this.failedNuggetmon++;
+            this.currentNuggetmon.splice(index, 1);
+            console.log(`${nuggetmon.name} has been removed from your Nuggetmon collection.`);
+        } else {
+            console.warn(`Nuggetmon with name "${nuggetmon.name}" not found in the collection.`);
+        }
     }
 
-    const index = this.currentNuggetmon.findIndex(n => n.name === nuggetmon.name);
-    if (index > -1) {
-        this.failedNuggetmon++;
-        this.currentNuggetmon.splice(index, 1);
-        console.log(`${nuggetmon.name} has been removed from your Nuggetmon collection.`);
-    } else {
-        console.warn(`Nuggetmon with name "${nuggetmon.name}" not found in the collection.`);
+    getNuggetmonByName(name) {
+        return this.currentNuggetmon.find(nuggetmon => nuggetmon.name === name) || null;
     }
+<<<<<<< HEAD:my-app/src/User.js
+=======
 }
 
 getActiveNuggetmon() {
@@ -130,10 +150,15 @@ setActiveNuggetmon(nuggetmon) {
 getNuggetmonByName(name) {
     return this.currentNuggetmon.find(nuggetmon => nuggetmon.name === name) || null;
 }
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677:my-app/src/classes/User.js
 
     getNuggets() {
         return this.nuggets;
     }
+<<<<<<< HEAD:my-app/src/User.js
+}
+=======
 }
 
 // export default User;
+>>>>>>> dd7b2073a1c462b43c57ca59701f3cb41a0e6677:my-app/src/classes/User.js
