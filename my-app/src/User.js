@@ -1,6 +1,6 @@
-import { Nuggetmon } from "./Nuggetmon";
+import { Nuggetmon } from "./classes/Nuggetmon.js";
 
-class User {
+export default class User {
     failedNuggetmon;
     currentNuggetmon;
     nuggets;
@@ -8,7 +8,12 @@ class User {
 
     constructor() {
         this.failedNuggetmon = 0;
-        this.currentNuggetmon = [new Nuggetmon("Nugget", "src/images/nugget.png")];
+        this.currentNuggetmon = [new Nuggetmon("Nugget", "images/nugget.png"), 
+                                new Nuggetmon("Mike", "images/mike.png"),
+                                new Nuggetmon("Totoro", "images/totoro.png")
+        ];
+        //this.currentNuggetmon = [new Nuggetmon("Nugget", "images/nugget.png"), new Nuggetmon("Mike", "images/mike.png")];
+        // this.currentNuggetmon = [new Nuggetmon("Nugget", "images/nugget.png")];
         this.nuggets = 0;
         this.nuggetdex = {
             "Nugget": true,
@@ -75,7 +80,7 @@ class User {
             "Lightning McQueen": false,
             "Goku": false,
             "LeBron": false
-        };        
+        };
     }
 
     addNuggets(amount) {
@@ -97,29 +102,27 @@ class User {
         }
     }
 
-removeNuggetmon(nuggetmon) {
-    if (!nuggetmon || !nuggetmon.name) {
-        console.error("Invalid Nuggetmon object passed:", nuggetmon);
-        return;
+    removeNuggetmon(nuggetmon) {
+        if (!nuggetmon || !nuggetmon.name) {
+            console.error("Invalid Nuggetmon object passed:", nuggetmon);
+            return;
+        }
+
+        const index = this.currentNuggetmon.findIndex(n => n.name === nuggetmon.name);
+        if (index > -1) {
+            this.failedNuggetmon++;
+            this.currentNuggetmon.splice(index, 1);
+            console.log(`${nuggetmon.name} has been removed from your Nuggetmon collection.`);
+        } else {
+            console.warn(`Nuggetmon with name "${nuggetmon.name}" not found in the collection.`);
+        }
     }
 
-    const index = this.currentNuggetmon.findIndex(n => n.name === nuggetmon.name);
-    if (index > -1) {
-        this.failedNuggetmon++;
-        this.currentNuggetmon.splice(index, 1);
-        console.log(`${nuggetmon.name} has been removed from your Nuggetmon collection.`);
-    } else {
-        console.warn(`Nuggetmon with name "${nuggetmon.name}" not found in the collection.`);
+    getNuggetmonByName(name) {
+        return this.currentNuggetmon.find(nuggetmon => nuggetmon.name === name) || null;
     }
-}
-
-getNuggetmonByName(name) {
-    return this.currentNuggetmon.find(nuggetmon => nuggetmon.name === name) || null;
-}
 
     getNuggets() {
         return this.nuggets;
     }
 }
-
-export default User;
