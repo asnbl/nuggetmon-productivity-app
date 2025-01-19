@@ -26,7 +26,7 @@ const createWindow = () => {
 
   mainWindow.webContents.openDevTools();
 
-  setTimeout(createPopupWindow, 5000);
+  setTimeout(createPopupWindow, 2000);
 };
 
 const createPopupWindow = () => {
@@ -44,7 +44,7 @@ const createPopupWindow = () => {
     }
   });
 
-  popupWindow.loadFile('popup.html');
+  popupWindow.loadFile('src/popup.html');
 
   popupWindow.once('ready-to-show', () => {
     popupWindow.show();
