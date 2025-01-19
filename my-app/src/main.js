@@ -6,6 +6,13 @@ if (started) {
   app.quit();
 }
 
+
+const { windowManager } = require("node-window-manager");
+
+// const window = windowManager.getActiveWindow();
+//
+// // Prints the currently focused window bounds.
+// console.log(window.getTitle());
 let mainWindow;
 let popupWindow;
 
@@ -61,8 +68,47 @@ const createPopupWindow = () => {
   });
 };
 
+
+const trackWindows = () => {
+  setInterval(async () => {
+    let newWindow = windowManager.getActiveWindow();
+    console.log(newWindow);
+  }, 1000);
+}
+
+const getOpenWindows = () => {
+  const windows = getWindows();
+
+  // Filter to include only visible windows
+  const visibleWindows = windows.filter(window => window.isVisible());
+
+  // // Optionally filter further based on other properties
+  // const userFacingWindows = visibleWindows.filter(window => {
+  //   // You can add more conditions here to exclude windows that shouldn't be considered
+  //   return window.title && window.title.trim() !== ''; // Ensure the window has a title
+  // });
+  return visibleWindows;
+  // console.log('Open Windows:', visibleWindows);
+};
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+
+  const windows = getOpenWindows();
+  console.log(windows);
+  console.log(windows.length);
+
+  // trackWindows();
+
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+
+app.whenReady().then(() => {
+  createWindow();
+
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
