@@ -1,6 +1,6 @@
 import { Nuggetmon } from "./Nuggetmon";
 
-class User {
+export class User {
     failedNuggetmon;
     currentNuggetmon;
     activeNuggetmon;
@@ -136,4 +136,4 @@ getNuggetmonByName(name) {
     }
 }
 
-export default User;
+// export default User;
