@@ -1,5 +1,6 @@
-const {windowManager} = require('node-window-manager');
+const { windowManager } = require('node-window-manager');
 import Timer from './Timer';
+const { ipcMain } = require('electron');
 
 const timeBeforeAnger = 5000 // 5 seconds for testing
 const angerIncreaseInterval = 5000 // 5 seconds for testing
@@ -35,7 +36,10 @@ export class Session {
         this.timer.pause();
         this.clearAllIntervals();
         this.user.addNuggets(this.reap);
-        console.log('Session ended');
+        console.log(`Session ended, nuggets: ${this.user.getNuggets()}`);
+
+        // Emit the updated nugget count to the main process
+        ipcMain.emit('update-nugget-count', this.user.getNuggets());
     }
 
     clearAllIntervals() {
@@ -55,8 +59,6 @@ export class Session {
 
     trackWindows() {
         if (this.timer.isRunning) {
-
-
             this.trackingInterval = setInterval(async () => {
                 let newWindow = windowManager.getActiveWindow();
 
@@ -67,7 +69,6 @@ export class Session {
                     this.angerInterval = null;
                     this.angerTimeout = null;
                 } else {
-                    // console.log(`current window: ${newWindow.id}, should be one of: ${this.productiveApps}`);
                     if (!this.angerTimeout) {
                         this.angerTimeout = setTimeout(() => {
                             this.startAngerInterval();
@@ -93,28 +94,26 @@ export class Session {
                 }, reapInterval);
             }
         }
-
     }
 
     startAngerInterval() {
         if (this.timer.isRunning) {
-        if (!this.angerInterval) {
-            this.angerInterval = setInterval(() => {
-                let currentWindow = windowManager.getActiveWindow();
-                if (this.productiveApps.some(app => app == currentWindow.id)) {
-                    console.log("Time to reset the anger interval!");
-                    clearInterval(this.angerInterval);
-                    this.angerInterval = null;
-                } else {
-                    this.activeMon.increaseAnger();
-                    console.log(`Anger level increased to: ${this.activeMon.angerLevel}`);
-                    if (this.activeMon.getAngerPercentage() >= 1) {
-                        this.user.removeNuggetmon(this.activeMon);
-                        console.log("Partner left...");
+            if (!this.angerInterval) {
+                this.angerInterval = setInterval(() => {
+                    let currentWindow = windowManager.getActiveWindow();
+                    if (this.productiveApps.some(app => app == currentWindow.id)) {
+                        clearInterval(this.angerInterval);
+                        this.angerInterval = null;
+                    } else {
+                        this.activeMon.increaseAnger();
+                        console.log(`Anger level increased to: ${this.activeMon.angerLevel}`);
+                        if (this.activeMon.getAngerPercentage() >= 1) {
+                            this.user.removeNuggetmon(this.activeMon);
+                            console.log("Partner left...");
+                        }
                     }
-                }
-            }, angerIncreaseInterval);
-        }
+                }, angerIncreaseInterval);
+            }
         }
     }
 }
