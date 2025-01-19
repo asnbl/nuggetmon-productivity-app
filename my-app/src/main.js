@@ -42,14 +42,20 @@ const trackWindows = () => {
   }, 1000);
 }
 
-const getWindows = () => {
-  const windows = windowManager.getWindows();
-  windows.map((window) => {
-    // console.log(window.getTitle());
-    return window.getTitle();
-  });
-  return windows;
-}
+const getOpenWindows = () => {
+  const windows = getWindows();
+
+  // Filter to include only visible windows
+  const visibleWindows = windows.filter(window => window.isVisible());
+
+  // // Optionally filter further based on other properties
+  // const userFacingWindows = visibleWindows.filter(window => {
+  //   // You can add more conditions here to exclude windows that shouldn't be considered
+  //   return window.title && window.title.trim() !== ''; // Ensure the window has a title
+  // });
+  return visibleWindows;
+  // console.log('Open Windows:', visibleWindows);
+};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -57,9 +63,9 @@ const getWindows = () => {
 app.whenReady().then(() => {
   createWindow();
 
-  const windows = getWindows();
+  const windows = getOpenWindows();
+  console.log(windows);
   console.log(windows.length);
-  // console.log(windows);
 
   // trackWindows();
 
