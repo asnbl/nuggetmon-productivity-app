@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,15 +8,16 @@
 </head>
 
 <body>
-  <header>
-    <div class="header">
-      <h1 class="title">NUGGETMON</h1>
-      <div class='nugget'><img src="assets/nugget_types.png" alt="Nugget!"></div>
-      <ul>
-        <li><a class="active" href="#timer">Timer</a></li>
-        <li><a href="gacha.html">Gacha</a></li>
-        <li><a href="nuggetmon.html">Nuggetmon</a></li>
-      </ul>
+
+<header>
+  <div class="header">
+    <h1 class="title">NUGGETMON</h1>
+    <div class='nugget'><img src="assets/nugget_types.png" alt="Nugget!"></div>
+    <ul>
+      <li><a href="index.html">Timer</a></li>
+      <li><a href="gacha.html">Gacha</a></li>
+      <li><a class="active" href="nuggetmon.html">Nuggetmon</a></li>
+    </ul>
       <div class="profile-container">
         <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
         <div class="nugget-group">
@@ -25,8 +25,11 @@
           <p class="nugget-amt">0</p>
         </div> <!--TODO: put actual nugget amount -->
       </div>
+
     </div>
-  </header>
+  </div>
+</header>
+
 
   <main>
     <!-- <button id="button" onclick="duplicate()"> POWER THE LEBRONS!!</button> -->
@@ -39,10 +42,37 @@
 
         <div class="anger-bar"></div>
         <div><img id="mon-img" src="src/images/nugget.png" alt="" class="mon-img" width="128" height="129"></div>
+
       </div>
+
+      <div class="anger-bar"></div>
+      <div><img src="assets/lebron.png" alt="lebron" class="mon-img"></div>
     </div>
-  </main>
-  <!-- ../assets/lebron.png -->
+
+  </div>
+</main>
+
+<script>
+  window.electron.onUpdateNuggetCount((nuggetCount) => {
+    console.log("Received nugget count:", nuggetCount);
+    const nuggetAmtElement = document.getElementById('nugget-amt');
+    if (nuggetAmtElement) {
+      nuggetAmtElement.textContent = nuggetCount;
+      localStorage.setItem('nuggetCount', nuggetCount); // Store the nugget count in localStorage
+    } else {
+      console.error("Element with id 'nugget-amt' not found");
+    }
+  });
+
+  // Retrieve the nugget count from localStorage when the page loads
+  window.addEventListener('DOMContentLoaded', () => {
+    const storedNuggetCount = localStorage.getItem('nuggetCount');
+    if (storedNuggetCount !== null) {
+      document.getElementById('nugget-amt').textContent = storedNuggetCount;
+    }
+  });
+</script>
+
 </body>
 
 <script type="module" src="src/scriptNuggetmon.js"></script>

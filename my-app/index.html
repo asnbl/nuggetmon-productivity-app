@@ -21,7 +21,7 @@
       <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
       <div class="nugget-group">
         <div class="nuggetcoin"><img class="coin-image" src="assets/coin group.png" alt="coin"></div>
-        <p class="nugget-amt">32535</p>
+        <p id="nugget-amt" class="nugget-amt">0</p>
       </div> <!--TODO: put actual nugget amount -->
     </div>
   </div>
@@ -76,9 +76,9 @@
       const appItem = document.createElement('div');
       appItem.className = 'app-item';
       appItem.innerHTML = `
-          <input type="checkbox" data-window-id="${window.id}">
-          <span>${window.title}</span>
-        `;
+        <input type="checkbox" data-window-id="${window.id}">
+        <span>${window.title}</span>
+      `;
       appsList.appendChild(appItem);
     });
   });
@@ -92,6 +92,25 @@
 
     const pomodoroTimer = document.getElementById('pomodoro-timer').value;
     window.electron.startSession(selectedWindows, pomodoroTimer);
+  });
+
+  window.electron.onUpdateNuggetCount((nuggetCount) => {
+    console.log("Received nugget count:", nuggetCount);
+    const nuggetAmtElement = document.getElementById('nugget-amt');
+    if (nuggetAmtElement) {
+      nuggetAmtElement.textContent = nuggetCount;
+      localStorage.setItem('nuggetCount', nuggetCount); // Store the nugget count in localStorage
+    } else {
+      console.error("Element with id 'nugget-amt' not found");
+    }
+  });
+
+  // Retrieve the nugget count from localStorage when the page loads
+  window.addEventListener('DOMContentLoaded', () => {
+    const storedNuggetCount = localStorage.getItem('nuggetCount');
+    if (storedNuggetCount !== null) {
+      document.getElementById('nugget-amt').textContent = storedNuggetCount;
+    }
   });
 </script>
 </body>

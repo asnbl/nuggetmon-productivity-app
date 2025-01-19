@@ -10,42 +10,37 @@ if (started) {
   app.quit();
 }
 
-let productiveWindows = []
-
-let mainWindow;
+let mainWindow; // Define mainWindow here
 let popupWindow;
 
 const { windowManager } = require('node-window-manager')
 
-// const createPopupWindow = () => {
-//   popupWindow = new BrowserWindow({
-//     width: 300,
-//     height: 200,
-//     alwaysOnTop: true,
-//     frame: false,
-//     transparent: true,
-//     show: false,
-//     skipTaskbar: true,
-//     webPreferences: {
-//       nodeIntegration: false,
-//       contextIsolation: true,
-//     }
-//   });
 
-//   popupWindow.loadFile('src/popup.html');
+const createPopupWindow = () => {
+  popupWindow = new BrowserWindow({
+    width: 300,
+    height: 200,
+    alwaysOnTop: true,
+    frame: false,
+    transparent: true,
+    show: false,
+    skipTaskbar: true,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+    }
+  });
 
-//   popupWindow.once('ready-to-show', () => {
-//     popupWindow.show();
-//     popupWindow.setAlwaysOnTop(true, 'screen-saver');
-//   });
+  popupWindow.loadFile('src/popup.html');
 
-//   popupWindow.on('blur', () => {
-//     popupWindow.focus();
-//   });
-// };
+  popupWindow.on('blur', () => {
+    popupWindow.focus();
+  });
+};
+
 
 const createWindow = () => {
-  mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({ // Assign the created BrowserWindow instance to mainWindow
     width: 1200,
     height: 800,
     webPreferences: {
@@ -95,12 +90,27 @@ const user = new User('genericUser');
 const nuggetmon = new Nuggetmon('genericName', 'genericNickname', 1, 0, 10, 'genericPhoto');
 
 ipcMain.on('start-session', (event, { selectedWindows, pomodoroTimer }) => {
-
-  const session = new Session(new Timer(pomodoroTimer * 60, () => session.endSession()), user, user.getActiveNuggetmon());
+  const session = new Session(new Timer(pomodoroTimer * 1, () => session.endSession()), user, user.getActiveNuggetmon());
 
   session.setProductiveApps(selectedWindows);
   session.startSession();
   console.log('Session started with productive apps:', selectedWindows);
+});
+
+ipcMain.on('update-nugget-count', (nuggetCount) => {
+  if (mainWindow) {
+    mainWindow.webContents.send('update-nugget-count', nuggetCount);
+  }
+});
+
+// Handle the show-popup event
+ipcMain.on('show-popup', () => {
+  if (popupWindow) {
+    popupWindow.show();
+    setTimeout(() => {
+      popupWindow.hide();
+    }, 500); // Show the popup for half a second
+  }
 });
 
 app.whenReady().then(() => {
