@@ -211,3 +211,32 @@ h2 {
 .arrow {
     font-weight: bold;
 }
+
+/* gacha stuff */
+.gacha-container {
+    margin: auto;    
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.gacha-img {
+    width: 60%;
+    margin: auto;
+}
+
+.round-button {
+    width: 100px; 
+    height: 100px; 
+    margin: auto;
+    margin-top: 30px;
+    border-radius: 50%; 
+    background-color: #f04040; 
+    border: none; 
+    cursor: pointer; 
+}
+
+.round-button:hover {
+    background-color: #851e1e;
+}
