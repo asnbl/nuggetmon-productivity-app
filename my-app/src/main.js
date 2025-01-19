@@ -22,7 +22,7 @@ const createPopupWindow = () => {
     width: 300,
     height: 200,
     alwaysOnTop: true,
-    frame: true,
+    frame: false,
     transparent: true,
     show: false,
     skipTaskbar: true,
