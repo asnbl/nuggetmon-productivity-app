@@ -1,11 +1,12 @@
 import {Nuggetmon} from "./Nuggetmon";
 
 class Timer {
-    constructor(initialTime) {
+    constructor(initialTime, onComplete) {
         this.initialTime = initialTime;
         this.timeLeft = initialTime;
         this.isRunning = false;
         this.interval = null;
+        this.onComplete = onComplete
     }
 
     start() {
@@ -19,6 +20,9 @@ class Timer {
             if (this.timeLeft <= 0) {
                 this.pause();
                 console.log('Timer completed');
+                if (this.onComplete) {
+                    this.onComplete();
+                }
             }
         }, 1000);
     }
