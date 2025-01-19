@@ -14,6 +14,7 @@ let mainWindow; // Define mainWindow here
 let popupWindow;
 
 const { windowManager } = require('node-window-manager')
+const {ipcRenderer} = require('electron');
 
 const createPopupWindow = () => {
   popupWindow = new BrowserWindow({
@@ -63,6 +64,12 @@ const createWindow = () => {
   });
 };
 
+function clearLocalStorage() {
+  if (mainWindow && mainWindow.webContents) {
+    mainWindow.webContents.session.clearStorageData({ storages: ['localstorage'] });
+  }
+}
+
 const getOpenWindows = () => {
   const windows = windowManager.getWindows();
 
@@ -87,18 +94,23 @@ const user = new User('genericUser');
 const nuggetmon = new Nuggetmon('genericName', 'genericNickname', 1, 0, 10, 'genericPhoto');
 
 ipcMain.on('start-session', (event, { selectedWindows, pomodoroTimer }) => {
-  const session = new Session(new Timer(pomodoroTimer * 60, () => session.endSession()), user, user.getActiveNuggetmon());
+  const session = new Session(new Timer(pomodoroTimer * 1, () => session.endSession()), user, user.getActiveNuggetmon());
 
   session.setProductiveApps(selectedWindows);
   session.startSession();
   console.log('Session started with productive apps:', selectedWindows);
 });
 
-ipcMain.on('update-nugget-count', (event, nuggetCount) => {
+ipcMain.on('update-nugget-count', (_, nuggetCount) => {
+  console.log("Main process received update-nugget-count:", nuggetCount);
   if (mainWindow) {
     mainWindow.webContents.send('update-nugget-count', nuggetCount);
+    console.log('Sent update-nugget-count to renderer:', nuggetCount);
+  } else {
+    console.log('mainWindow not available');
   }
 });
+
 
 // Handle the show-popup event
 ipcMain.on('show-popup', () => {
@@ -112,12 +124,12 @@ ipcMain.on('show-popup', () => {
 
 app.whenReady().then(() => {
   createWindow();
-
+  clearLocalStorage();
   const windows = getOpenWindows();
   console.log(windows);
   console.log(windows.length);
 
-  trackWindows();
+  // trackWindows();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

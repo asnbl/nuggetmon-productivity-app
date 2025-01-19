@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,23 +95,32 @@
     window.electron.startSession(selectedWindows, pomodoroTimer);
   });
 
-  window.electron.onUpdateNuggetCount((nuggetCount) => {
-    console.log("Received nugget count:", nuggetCount);
-    const nuggetAmtElement = document.getElementById('nugget-amt');
-    if (nuggetAmtElement) {
-      nuggetAmtElement.textContent = nuggetCount;
-      localStorage.setItem('nuggetCount', nuggetCount); // Store the nugget count in localStorage
-    } else {
-      console.error("Element with id 'nugget-amt' not found");
-    }
-  });
+  document.addEventListener('DOMContentLoaded', () => {
+    window.electron.onUpdateNuggetCount((nuggetCount) => {
+      console.log("Received nugget count:", nuggetCount);
+      const nuggetAmtElement = document.getElementById('nugget-amt');
+      if (nuggetAmtElement) {
+        nuggetAmtElement.textContent = nuggetCount;
+        localStorage.setItem('nuggetCount', nuggetCount);
+      } else {
+        console.error("Element with id 'nugget-amt' not found");
+      }
+    });
 
-  // Retrieve the nugget count from localStorage when the page loads
-  window.addEventListener('DOMContentLoaded', () => {
-    const storedNuggetCount = localStorage.getItem('nuggetCount');
-    if (storedNuggetCount !== null) {
-      document.getElementById('nugget-amt').textContent = storedNuggetCount;
+    // Function to update nugget display
+    function updateNuggetDisplay(count) {
+      const nuggetAmtElement = document.getElementById('nugget-amt');
+      if (nuggetAmtElement) {
+        nuggetAmtElement.textContent = count;
+        localStorage.setItem('nuggetCount', count);
+      } else {
+        console.error("Element with id 'nugget-amt' not found");
+      }
     }
+
+    // Retrieve the nugget count from localStorage when the page loads
+    const storedNuggetCount = localStorage.getItem('nuggetCount');
+    updateNuggetDisplay(storedNuggetCount !== null ? parseInt(storedNuggetCount) : 0);
   });
 </script>
 </body>

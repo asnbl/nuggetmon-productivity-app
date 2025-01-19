@@ -39,8 +39,9 @@ export class Session {
         console.log(`Session ended, nuggets: ${this.user.getNuggets()}`);
 
         // Emit the updated nugget count to the main process
-        ipcMain.emit('update-nugget-count', this.user.getNuggets());
+        ipcMain.emit('update-nugget-count', null, this.user.getNuggets());
     }
+
 
     clearAllIntervals() {
         clearInterval(this.trackingInterval);
