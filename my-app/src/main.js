@@ -12,7 +12,7 @@ let productiveWindows = []
 let mainWindow;
 let popupWindow;
 
-const {windowManager} = require('node-window-manager')
+const {windowManager} = require('node-window-manager') // comment when run
 
 
 const createPopupWindow = () => {
@@ -52,11 +52,13 @@ const createWindow = () => {
     },
   });
 
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
-  }
+  // if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+  //   mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  // } else {
+  //   mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
+  // }
+
+  mainWindow.loadFile("nuggetmon.html");
 
   // Open the DevTools.
 //   mainWindow.webContents.openDevTools();
@@ -70,6 +72,7 @@ const createWindow = () => {
 };
 
 
+// comment when run
 const trackWindows = () => {
   setInterval(async () => {
     let newWindow = windowManager.getActiveWindow();
@@ -93,6 +96,7 @@ const trackWindows = () => {
   }, 1000);
 };
 
+// comment when run
 const getOpenWindows = () => {
   const windows = windowManager.getWindows();
 
@@ -110,11 +114,12 @@ const getOpenWindows = () => {
 app.whenReady().then(() => {
   createWindow();
 
+  // comment when run
   const windows = getOpenWindows();
   console.log(windows);
   console.log(windows.length);
 
-  trackWindows();
+  // trackWindows();
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -125,12 +130,6 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
-});
-
-mainWindow.on('closed', () => {
-  if (popupWindow && !popupWindow.isDestroyed()) {
-    popupWindow.close();
-  }
 });
 
 app.on('window-all-closed', () => {
