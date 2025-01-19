@@ -12,7 +12,7 @@ let productiveWindows = []
 let mainWindow;
 let popupWindow;
 
-// const {windowManager} = require('node-window-manager') // comment when run
+const {windowManager} = require('node-window-manager') // comment when run
 
 
 const createPopupWindow = () => {
@@ -72,54 +72,54 @@ const createWindow = () => {
 };
 
 
-// // comment when run
-// const trackWindows = () => {
-//   setInterval(async () => {
-//     let newWindow = windowManager.getActiveWindow();
+// comment when run
+const trackWindows = () => {
+  setInterval(async () => {
+    let newWindow = windowManager.getActiveWindow();
 
-//     // Check if the window is already in productiveWindows by comparing IDs
-//     if (
-//         newWindow &&
-//         !productiveWindows.some(win => win.id === newWindow.id) &&
-//         productiveWindows.length < 3
-//     ) {
-//       productiveWindows.push(newWindow);
-//       console.log("Added to productive windows:", newWindow);
-//     }
+    // Check if the window is already in productiveWindows by comparing IDs
+    if (
+        newWindow &&
+        !productiveWindows.some(win => win.id === newWindow.id) &&
+        productiveWindows.length < 3
+    ) {
+      productiveWindows.push(newWindow);
+      console.log("Added to productive windows:", newWindow);
+    }
 
-//     if (
-//         newWindow &&
-//         !productiveWindows.some(win => win.id === newWindow.id)
-//     ) {
-//       console.log("That's not productive!");
-//     }
-//   }, 1000);
-// };
+    if (
+        newWindow &&
+        !productiveWindows.some(win => win.id === newWindow.id)
+    ) {
+      console.log("That's not productive!");
+    }
+  }, 1000);
+};
 
-// // comment when run
-// const getOpenWindows = () => {
-//   const windows = windowManager.getWindows();
+// comment when run
+const getOpenWindows = () => {
+  const windows = windowManager.getWindows();
 
-//   // Filter to include only visible windows
-//   const visibleWindows = windows.filter(window => window.isVisible());
+  // Filter to include only visible windows
+  const visibleWindows = windows.filter(window => window.isVisible());
 
-//   const windowTitles = visibleWindows.map((window) => {return window.getTitle()});
+  const windowTitles = visibleWindows.map((window) => {return window.getTitle()});
 
-//   return windowTitles.filter(window => window !== '');
-//   // console.log('Open Windows:', visibleWindows);
-// };
+  return windowTitles.filter(window => window !== '');
+  // console.log('Open Windows:', visibleWindows);
+};
 
 
 
 app.whenReady().then(() => {
   createWindow();
 
-  // // comment when run
-  // const windows = getOpenWindows();
-  // console.log(windows);
-  // console.log(windows.length);
+  // comment when run
+  const windows = getOpenWindows();
+  console.log(windows);
+  console.log(windows.length);
 
-  // trackWindows();
+  trackWindows();
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
