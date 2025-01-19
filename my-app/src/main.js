@@ -2,71 +2,124 @@ import { app, BrowserWindow } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
   app.quit();
 }
 
-// const { windowManager } = require("node-window-manager");
 
-// const window = windowManager.getActiveWindow();
-//
-// // Prints the currently focused window bounds.
-// console.log(window.getTitle());
+let productiveWindows = []
 
-const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    // webPreferences: {
-    //   preload: path.join(__dirname, 'preload.js'),
-    // },
+let mainWindow;
+let popupWindow;
+
+const {windowManager} = require('node-window-manager')
+
+
+const createPopupWindow = () => {
+  popupWindow = new BrowserWindow({
+    width: 300,
+    height: 200,
+    alwaysOnTop: true,
+    frame: false,
+    transparent: true,
+    show: false,
+    skipTaskbar: true,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+    }
   });
 
-  // and load the index.html of the app.
-  // if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-  //   mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  // } else {
-  //   mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
-  // }
+  popupWindow.loadFile('src/popup.html');
 
-  mainWindow.loadFile("nuggetmon.html");
+  popupWindow.once('ready-to-show', () => {
+    popupWindow.show();
+    popupWindow.setAlwaysOnTop(true, 'screen-saver');
+  });
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  popupWindow.on('blur', () => {
+    popupWindow.focus();
+  });
 };
 
-// const trackWindows = () => {
-//   setInterval(async () => {
-//     let newWindow = windowManager.getActiveWindow();
-//     console.log(newWindow);
-//   }, 1000);
-// }
 
-// const getWindows = () => {
-//   const windows = windowManager.getWindows();
-//   windows.map((window) => {
-//     // console.log(window.getTitle());
-//     return window.getTitle();
-//   });
-//   return windows;
-// }
+const createWindow = () => {
+  mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+    },
+  });
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  } else {
+    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
+  }
+
+  // Open the DevTools.
+//   mainWindow.webContents.openDevTools();
+
+  setTimeout(createPopupWindow, 1000);
+  mainWindow.on('closed', () => {
+    if (popupWindow && !popupWindow.isDestroyed()) {
+      popupWindow.close();
+    }
+  });
+};
+
+
+const trackWindows = () => {
+  setInterval(async () => {
+    let newWindow = windowManager.getActiveWindow();
+
+    // Check if the window is already in productiveWindows by comparing IDs
+    if (
+        newWindow &&
+        !productiveWindows.some(win => win.id === newWindow.id) &&
+        productiveWindows.length < 3
+    ) {
+      productiveWindows.push(newWindow);
+      console.log("Added to productive windows:", newWindow);
+    }
+
+    if (
+        newWindow &&
+        !productiveWindows.some(win => win.id === newWindow.id)
+    ) {
+      console.log("That's not productive!");
+    }
+  }, 1000);
+};
+
+const getOpenWindows = () => {
+  const windows = windowManager.getWindows();
+
+  // Filter to include only visible windows
+  const visibleWindows = windows.filter(window => window.isVisible());
+
+  const windowTitles = visibleWindows.map((window) => {return window.getTitle()});
+
+  return windowTitles.filter(window => window !== '');
+  // console.log('Open Windows:', visibleWindows);
+};
+
+
+
 app.whenReady().then(() => {
   createWindow();
 
-  // const windows = getWindows();
-  // console.log(windows.length);
-  // console.log(windows);
+  const windows = getOpenWindows();
+  console.log(windows);
+  console.log(windows.length);
 
-  // trackWindows();
+  trackWindows();
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
+
+
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
@@ -74,14 +127,14 @@ app.whenReady().then(() => {
   });
 });
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+mainWindow.on('closed', () => {
+  if (popupWindow && !popupWindow.isDestroyed()) {
+    popupWindow.close();
+  }
+});
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
