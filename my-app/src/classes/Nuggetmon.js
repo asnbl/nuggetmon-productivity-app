@@ -5,6 +5,7 @@ export class Nuggetmon {
     angerLevel;
     angerThreshold;
     photo;
+
     constructor(name, nickname, id, angerLevel, angerThreshold, photo) {
         this.name = name;
         this.nickname = nickname;
@@ -13,10 +14,12 @@ export class Nuggetmon {
         this.angerThreshold = angerThreshold;
         this.photo = photo;
     }
+
     setNickname(nickname) {
         this.nickname = nickname;
     }
+
     increaseAnger() {
-        return ++this.angerLevel;
+        ++this.angerLevel;
     }
 }

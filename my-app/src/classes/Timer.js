@@ -1,44 +1,40 @@
 import {Nuggetmon} from "./Nuggetmon";
 
-class ProductivityTracker {
-    constructor(user) {
-        this.user = user;
-        this.timer = null;
-        this.startTime = null;
-        this.endTime = null;
-        this.potentialNuggets = 0;
+class Timer {
+    constructor(initialTime) {
+        this.initialTime = initialTime;
+        this.timeLeft = initialTime;
+        this.isRunning = false;
+        this.interval = null;
     }
-    startSession(duration) {
-        this.startTime = new Date();
-        this.endTime = new Date(this.startTime.getTime() + duration * 60000);
-        this.potentialNuggets = Math.floor(duration / 5);
-        this.timer = setInterval(() => {
-            this.checkProductivity();
-        }, 60000); // Check every minute
+
+    start() {
+        if (this.isRunning) return;
+
+        this.isRunning = true;
+        this.interval = setInterval(() => {
+            this.timeLeft -= 1;
+            console.log(`Time left: ${this.timeLeft}s`);
+
+            if (this.timeLeft <= 0) {
+                this.pause();
+                console.log('Timer completed');
+            }
+        }, 1000);
     }
-    checkProductivity() {
-        // Implement logic to check active applications
-        // and determine if the user is being productive
-        const isProductive = this.isUserProductive();
-        if (isProductive) {
-            this.user.nuggetmon.forEach(nuggetmon => nuggetmon.decreaseAnger(5));
-        } else {
-            this.user.nuggetmon.forEach(nuggetmon => nuggetmon.increaseAnger(10));
-            this.potentialNuggets = Math.max(0, this.potentialNuggets - 1);
+
+    pause() {
+        if (this.isRunning) {
+            clearInterval(this.interval);
+            this.isRunning = false;
         }
-        if (new Date() >= this.endTime) {
-            this.endSession();
-        }
     }
-    isUserProductive() {
-        // Implement logic to check active applications
-        // and determine if the user is being productive
-        // Return true if productive, false otherwise
-    }
-    endSession() {
-        clearInterval(this.timer);
-        this.user.addNuggets(this.potentialNuggets);
-        // Handle any angry Nuggetmon
-        this.user.nuggetmon = this.user.nuggetmon.filter(nuggetmon => !nuggetmon.isAngry());
+
+    restart() {
+        this.pause();
+        this.timeLeft = this.initialTime;
+        this.start();
     }
 }
+
+export default Timer;
