@@ -1,18 +1,14 @@
 export class Nuggetmon {
     name;
-    nickname;
-    id;
     angerLevel;
     angerThreshold;
     photo;
 
-    constructor(name, nickname, id, angerLevel, angerThreshold, photo) {
+    constructor(name, photoPath) {
         this.name = name;
-        this.nickname = nickname;
-        this.id = id;
-        this.angerLevel = angerLevel;
-        this.angerThreshold = angerThreshold;
-        this.photo = photo;
+        this.angerLevel = 0;
+        this.angerThreshold = 20;
+        this.photo = photoPath;
     }
 
     setNickname(nickname) {
