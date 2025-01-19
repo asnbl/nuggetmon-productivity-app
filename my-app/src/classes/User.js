@@ -9,7 +9,7 @@ export class User {
 
     constructor() {
         this.failedNuggetmon = 0;
-        this.currentNuggetmon = [new Nuggetmon("Nugget", "src/images/nugget.png")];
+        this.currentNuggetmon = [new Nuggetmon("Nugget", "src/images/nugget.png"), new Nuggetmon("Nugget", "src/images/nugget.png"), new Nuggetmon("Nugget", "src/images/nugget.png")];
         this.activeNuggetmon = this.currentNuggetmon[0];
         this.nuggets = 0;
         this.nuggetdex = {
