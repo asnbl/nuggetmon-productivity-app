@@ -31,6 +31,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "active-win": "^9.0.0",
     "electron-forge": "^5.2.4",
     "electron-squirrel-startup": "^1.0.1",
     "node-window-manager": "^2.2.4"

@@ -42,13 +42,26 @@ const trackWindows = () => {
   }, 1000);
 }
 
+const getWindows = () => {
+  const windows = windowManager.getWindows();
+  windows.map((window) => {
+    // console.log(window.getTitle());
+    return window.getTitle();
+  });
+  return windows;
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
 
-  trackWindows();
+  const windows = getWindows();
+  console.log(windows.length);
+  // console.log(windows);
+
+  // trackWindows();
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
