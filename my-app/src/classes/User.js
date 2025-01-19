@@ -3,12 +3,14 @@ import { Nuggetmon } from "./Nuggetmon";
 class User {
     failedNuggetmon;
     currentNuggetmon;
+    activeNuggetmon;
     nuggets;
     nuggetdex;
 
     constructor() {
         this.failedNuggetmon = 0;
         this.currentNuggetmon = [new Nuggetmon("Nugget", "src/images/nugget.png")];
+        this.activeNuggetmon = this.currentNuggetmon[0];
         this.nuggets = 0;
         this.nuggetdex = {
             "Nugget": true,
@@ -110,6 +112,18 @@ removeNuggetmon(nuggetmon) {
         console.log(`${nuggetmon.name} has been removed from your Nuggetmon collection.`);
     } else {
         console.warn(`Nuggetmon with name "${nuggetmon.name}" not found in the collection.`);
+    }
+}
+
+getActiveNuggetmon() {
+    return this.activeNuggetmon;
+}
+
+setActiveNuggetmon(nuggetmon) {
+    if (nuggetmon instanceof Nuggetmon) {
+        this.activeNuggetmon = nuggetmon;
+    } else {
+        console.error("Invalid Nuggetmon object passed:", nuggetmon);
     }
 }
 
