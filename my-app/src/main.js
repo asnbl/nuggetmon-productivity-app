@@ -6,12 +6,13 @@ if (started) {
   app.quit();
 }
 
+
 let productiveWindows = []
 
 let mainWindow;
 let popupWindow;
 
-const {windowManager} = require('node-window-manager')
+const {windowManager} = require('node-window-manager') // comment when run
 
 
 const createPopupWindow = () => {
@@ -44,21 +45,23 @@ const createPopupWindow = () => {
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
 
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
-  }
+  // if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+  //   mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
+  // } else {
+  //   mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/nuggetmon.html`));
+  // }
+
+  mainWindow.loadFile("nuggetmon.html");
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+//   mainWindow.webContents.openDevTools();
 
   setTimeout(createPopupWindow, 1000);
   mainWindow.on('closed', () => {
@@ -69,6 +72,7 @@ const createWindow = () => {
 };
 
 
+// comment when run
 const trackWindows = () => {
   setInterval(async () => {
     let newWindow = windowManager.getActiveWindow();
@@ -92,6 +96,7 @@ const trackWindows = () => {
   }, 1000);
 };
 
+// comment when run
 const getOpenWindows = () => {
   const windows = windowManager.getWindows();
 
@@ -109,6 +114,7 @@ const getOpenWindows = () => {
 app.whenReady().then(() => {
   createWindow();
 
+  // comment when run
   const windows = getOpenWindows();
   console.log(windows);
   console.log(windows.length);
@@ -125,12 +131,6 @@ app.whenReady().then(() => {
     }
   });
 });
-
-// mainWindow.on('closed', () => {
-//   if (popupWindow && !popupWindow.isDestroyed()) {
-//     popupWindow.close();
-//   }
-// });
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
