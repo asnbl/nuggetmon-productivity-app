@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuggetmon</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header>
+    <div class="header">
+      <h1 class="title">NUGGETMON</h1>
+      <div class='nugget'><img src="assets/nugget_types.png" alt="Nugget!"></div>
+      <ul>
+        <li><a href="index.html">Timer</a></li>
+        <li><a class="active" href="gacha.html">Gacha</a></li>
+        <li><a href="nuggetmon.html">Nuggetmon</a></li>
+      </ul>
+      <div class="profile-container">
+        <div class="profile-icon"><img class="profile-image" src="assets/profile.webp" alt="pfp"></div>
+        <div class="nugget-group">
+          <div class="nuggetcoin"><img class="coin-image" src="assets/coin group.png" alt="coin"></div>
+          <p class="nugget-amt">32535</p>
+        </div> <!--TODO: put actual nugget amount -->
+      </div>
+    </div>
+  </header>
+
+  <div class="gacha-container">
+    <img class="gacha-img" src="assets/gacha.png" alt="Gacha">
+    <button id="gacha-button" class="round-button" onclick="roll();"></button>
+  </div>
+</body>
+
+<script src="my-app/src/classes/User.js"></script>
+<script src="my-app/src/classes/NuggetMachine.js"></script>
+<script src="my-app/src/main.js"></script>
