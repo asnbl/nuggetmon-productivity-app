@@ -1,31 +1,41 @@
+/* var declarations */
+:root {
+    --anger-color: #E96854;
+    --anger-lvl: 0%;
+}
+
+.lato-regular {
+    font-family: "Lato", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
 
 /* header stuff */
 body {
-    font-family: Arial, sans-serif;
+    font-family: Inter, sans-serif;
     display: flex;
     flex-direction: column;      
-    background-color: #ffffff;
+    background-color: #C3B1C8;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: Intel, sans-serif;
 }
 .header {
-    background-color: #cacaca;
+    background-color: #8F629F;
     width: 100%;
     margin: 0px;
     padding: 0px;
     align-items: flex-end;
     display: flex;
     font-size: 16px;
-    color: #000000;
+    color: #380606;
 }
 
 .title {
     font-size: 48px;
-    color: #000000;
+    color: #380606;
     text-align: left;
     margin-left: 2%;
-    font-family: Arial, sans-serif;
 }
 
 .nugget {
@@ -40,8 +50,7 @@ ul {
     display: flex;
     list-style-type: none;
     overflow: hidden;
-    background-color: #cdcdcd;
-    font-family: Arial, sans-serif;
+    background-color: #8F629F;
 }
 
 li {
@@ -52,7 +61,7 @@ li {
 
 li a {
     display: block;
-    color: rgb(0, 0, 0);
+    color: #380606;
     text-align: center;
     padding: 18px 4px;
     text-decoration: none;
@@ -61,11 +70,11 @@ li a {
 }
 
 li a:hover:not(.active) {
-    background-color: #eeeeee;  
+    background-color: #c3b1c889;  
 }
 
 .active {
-    background-color: #ffffff;
+    background-color: #C3B1C8;
 }
 
 /* profile stuff */
@@ -74,7 +83,6 @@ li a:hover:not(.active) {
     margin-right: 2%;     
     width: 80px;
     align-items: center;
-    font-family: Arial, sans-serif;
 }
 
 .profile-image {
@@ -94,7 +102,7 @@ li a:hover:not(.active) {
 
 .nuggetcoin {
     display: block;
-    color: #000;
+    color: #270000;
     margin-top: -20px;
 }
 
@@ -125,12 +133,23 @@ li a:hover:not(.active) {
 }
 
 .section {
-    background-color: #d3d3d3;
+    background-color: #f0e6dd;
     padding: 30px;
     border-radius: 15px;
-    width: 300px;
+    width: 30%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: left;
+}
+
+.time-input {
+    width: 100%;
+    padding: 0px;
+    text-align: right;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #f0e6dd;;
+    border: 0px;
+    box-sizing: border-box;
 }
 
 .apps {
@@ -139,13 +158,14 @@ li a:hover:not(.active) {
 }
 h2 {
     margin: 0 0 20px;
-    font-size: 18px;
+    font-size: 16px;
+    color: #380606;
 }
 
 .timers, .apps {
     margin-bottom: 20px;  
     border-radius: 15px;      
-    background-color: #d3d3d3;
+    background-color: #f0e6dd;
 }
 
 .timer-item {
@@ -191,7 +211,7 @@ h2 {
     margin: auto;
     margin-top: 30px;
     width: 100px;
-    background-color: #f5f5f5;
+    background-color: #f0e6dd;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
@@ -205,7 +225,7 @@ h2 {
 }
 
 .start-button:hover {
-    background-color: #e0e0e0;
+    background-color: #e2d4c8;
 }
 
 .arrow {
@@ -221,7 +241,7 @@ h2 {
     justify-content: center;
 }
 .gacha-img {
-    width: 60%;
+    width: 50%;
     margin: auto;
 }
 .round-button {
@@ -237,3 +257,59 @@ h2 {
 .round-button:hover {
     background-color: #851e1e;
 }
+
+/* mon stuff */
+
+.mon-display {
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    align-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+
+.nuggetmon-square {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-items: space-between;
+    background-color: #F8ECE1;
+    width: 11.5rem;
+    height: 13rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 3rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+
+}
+
+.nugget-mon-label {
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 400;
+    /* word-wrap: break-word;
+    text-align: center; */
+    /* padding-top: 13px;
+    padding-bottom: 8px; */
+    margin-bottom: 0px;
+    margin-top: 13px;
+}
+
+.anger-bar {
+    background-image: linear-gradient(to right, var(--anger-color) var(--anger-lvl),  white 0%);
+    
+    height: 0.63rem;
+    width: 9.05rem;
+    /* margin: auto; */
+    border-radius: 15px;
+    margin-bottom: 13px;
+    margin-top: 8px;
+}
+
