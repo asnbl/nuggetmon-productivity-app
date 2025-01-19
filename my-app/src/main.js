@@ -24,9 +24,14 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
 
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
-  setTimeout(createPopupWindow, 2000);
+  setTimeout(createPopupWindow, 1000);
+  mainWindow.on('closed', () => {
+    if (popupWindow && !popupWindow.isDestroyed()) {
+    popupWindow.close();
+    }
+  });
 };
 
 const createPopupWindow = () => {
