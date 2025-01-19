@@ -20,6 +20,6 @@ export class Nuggetmon {
     }
 
     increaseAnger() {
-        ++this.angerLevel;
+        this.angerLevel++;
     }
 }
