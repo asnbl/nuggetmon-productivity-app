@@ -11,6 +11,35 @@ let popupWindow;
 
 const {windowManager} = require('node-window-manager')
 
+
+const createPopupWindow = () => {
+  popupWindow = new BrowserWindow({
+    width: 300,
+    height: 200,
+    alwaysOnTop: true,
+    frame: false,
+    transparent: true,
+    show: false,
+    skipTaskbar: true,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+    }
+  });
+
+  popupWindow.loadFile('src/popup.html');
+
+  popupWindow.once('ready-to-show', () => {
+    popupWindow.show();
+    popupWindow.setAlwaysOnTop(true, 'screen-saver');
+  });
+
+  popupWindow.on('blur', () => {
+    popupWindow.focus();
+  });
+};
+
+
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -28,6 +57,13 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  setTimeout(createPopupWindow, 1000);
+  mainWindow.on('closed', () => {
+    if (popupWindow && !popupWindow.isDestroyed()) {
+      popupWindow.close();
+    }
+  });
 };
 
 
@@ -53,6 +89,8 @@ const getOpenWindows = () => {
   // console.log('Open Windows:', visibleWindows);
 };
 
+
+
 app.whenReady().then(() => {
   createWindow();
 
@@ -72,6 +110,12 @@ app.whenReady().then(() => {
     }
   });
 });
+
+// mainWindow.on('closed', () => {
+//   if (popupWindow && !popupWindow.isDestroyed()) {
+//     popupWindow.close();
+//   }
+// });
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
