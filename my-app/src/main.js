@@ -90,9 +90,11 @@ ipcMain.on('refresh-windows', (event) => {
   event.sender.send('open-windows', openWindows);
 });
 
+const user = new User('genericUser');
+const nuggetmon = new Nuggetmon('genericName', 'genericNickname', 1, 0, 10, 'genericPhoto');
+
 ipcMain.on('start-session', (event, { selectedWindows, pomodoroTimer }) => {
-  const user = new User('genericUser');
-  const nuggetmon = new Nuggetmon('genericName', 'genericNickname', 1, 0, 10, 'genericPhoto');
+
   const session = new Session(new Timer(pomodoroTimer * 60, () => session.endSession()), user, user.getActiveNuggetmon());
 
   session.setProductiveApps(selectedWindows);
