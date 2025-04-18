@@ -1,4 +1,4 @@
-# Nuggetmon — Productivty Tracking App
+# Nuggetmon — Productivity Tracking App
 
 ## Overview
 
